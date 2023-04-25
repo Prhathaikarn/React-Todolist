@@ -17,8 +17,8 @@ export function Sidebar () {
         </section>
         <section className='sidebar__project'>
           <ul className='project__lists'>
-            <li> <span><FaInbox /></span> <h6>Inbox</h6></li>
-            <li> <span><FaCalendar /></span> <h6>Today</h6></li>
+            <li> <span><FaInbox /></span> <h6>Project A</h6></li>
+            <li> <span><FaInbox /></span> <h6>Project B</h6></li>
 
           </ul>
         </section>

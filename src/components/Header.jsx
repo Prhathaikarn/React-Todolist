@@ -6,7 +6,7 @@ export function Header() {
       <span>
         <FaHome />
       </span>
-      <h3>CC-Todolist</h3>
+      <h3>CC-Todolist P.hathaikarn</h3>
     </header>
   );
 }
