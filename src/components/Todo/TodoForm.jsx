@@ -1,8 +1,8 @@
 import styles from './TodoForm.module.scss';
 import React, { useState } from 'react';
 
-export function TodoForm({ onSetIsShowForm, submitText, oldTask }) {
-  const [task, setTask] = useState(oldTask || '');
+export function TodoForm({ onSetIsShowForm, submitText, todo, onEditTodo }) {
+  const [task, setTask] = useState(todo.task || '');
   const [isError, setIsError] = useState(false);
 
   const handleSubmit = (e) => {
@@ -12,6 +12,8 @@ export function TodoForm({ onSetIsShowForm, submitText, oldTask }) {
     if (task.trim() === '') {
       setIsError(true);
       return;
+    } else {
+      onEditTodo(todo.id,task);
     }
     onSetIsShowForm(false);
   };
@@ -20,7 +22,7 @@ export function TodoForm({ onSetIsShowForm, submitText, oldTask }) {
     // console.log('Cancel');
     // onSetIsAddMode?.(false);
     // onSetIsEditMode?.(false);
-    onSetIsShowForm?.(false)
+    onSetIsShowForm?.(false);
   };
 
   const handleChangeInput = (e) => {
