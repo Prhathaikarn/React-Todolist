@@ -18,8 +18,8 @@ export function AddTodo({ onAddTodo }) {
         </div>
       ) : (
         <TodoForm
+        submitText="Add task"
           onSetIsShowForm={setIsAddMode}
-          submitText="Add task"
           onAddTodo={onAddTodo}
         />
       )}

@@ -1,27 +1,33 @@
 import styles from './TodoItem.module.scss';
 import { useState } from 'react';
 import { TodoForm } from './TodoForm';
+import { getFormattedDate } from '../../utils/DateUtils';
 import { HiCheck, HiPencil, HiTrash } from 'react-icons/hi';
 
-export function TodoItem({ todo, onEditTodo }) {
+
+export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
   // Check === DONE === todo.status == true
-  const [isCheck, setIsCheck] = useState(todo.status);
+  // const [isCheck, setIsCheck] = useState(todo.status);
   const [isEdit, setIsEdit] = useState(false);
 
   const handleToggleCheck = () => {
-    setIsCheck(!isCheck);
+    // setIsCheck(!isCheck);
+    onEditTodo(todo.id, {status: !todo.status})
   };
 
   const handleOpenEditMode = () => {
     setIsEdit(true);
   };
 
-  const handleDeleteTodo = () => {};
+  const handleDeleteTodo = () => {
+    onDeleteTodo(todo.id)
+  };
 
-  let checkBoxStyle = isCheck
+
+  let checkBoxStyle = todo.status
     ? styles.checkbox__icon__done
     : styles.checkbox__icon;
-  let taskStyle = isCheck ? styles.done : '';
+  let taskStyle = todo.status ? styles.done : '';
 
   return (
     <>
@@ -34,6 +40,7 @@ export function TodoItem({ todo, onEditTodo }) {
             <HiCheck className={checkBoxStyle} />
           </div>
           <p className={taskStyle}>{todo.task}</p>
+          <p>{getFormattedDate(todo.due_date)}</p>
 
           <div className={styles.edit__icon} onClick={handleOpenEditMode}>
             <HiPencil />
