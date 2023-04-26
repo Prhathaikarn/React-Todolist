@@ -3,12 +3,15 @@ import { useState } from 'react';
 import { TodoForm } from './TodoForm';
 
 export function AddTodo({ onAddTodo }) {
+  // # Logic & State
   const [isAddMode, setIsAddMode] = useState(false);
 
   const handleClickAddTask = () => {
+    // console.log("Open form")
     setIsAddMode(true);
   };
 
+  // # UI
   return (
     <>
       {!isAddMode ? (
@@ -18,9 +21,11 @@ export function AddTodo({ onAddTodo }) {
         </div>
       ) : (
         <TodoForm
-        submitText="Add task"
+          submitText="Add Task"
           onSetIsShowForm={setIsAddMode}
+          // onSetIsShowForm="5555"
           onAddTodo={onAddTodo}
+          // todo == undefined
         />
       )}
     </>
