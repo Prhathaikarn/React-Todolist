@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import {
   FaInbox,
   FaCalendar,
@@ -7,12 +6,12 @@ import {
   FaChevronDown,
 } from 'react-icons/fa';
 
-export function Sidebar(onSelectTab) {
+export function Sidebar({ onSelectTab }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleSelectTab = (index) => {
     setActiveIndex(index);
-    onSelectTab();
+    onSelectTab(index);
   };
 
   const genericLists = [
@@ -24,70 +23,64 @@ export function Sidebar(onSelectTab) {
     <aside className="sidebar">
       <section className="sidebar__generic">
         <ul className="generic__lists">
-          {genericLists.map((listsObj, index) => (
+          {genericLists.map((listObj, index) => (
             <li
-              key={listsObj.title}
+              key={listObj.title}
               className={activeIndex === index ? 'active' : ''}
-              onClick={() => setActiveIndex(index)}
+              onClick={() => handleSelectTab(index)}
             >
-              <span>{listsObj.icon}</span>
-              <h6>{listsObj.title}</h6>
+              <span>{listObj.icon} </span>
+              <h6>{listObj.title}</h6>
             </li>
           ))}
           {/* <li
-            className={activeIndex === 0 ? 'active' : ''}
-            onClick={() => setActiveIndex(0)}
-          >
-            {' '}
-            <span>
-              <FaInbox />
-            </span>{' '}
-            <h6>Inbox</h6>
-          </li>
-          <li
-            className={activeIndex === 1 ? 'active' : ''}
-            onClick={() => setActiveIndex(1)}
-          >
-            {' '}
-            <span>
-              <FaCalendar />
-            </span>{' '}
-            <h6>Today</h6>
-          </li>
-          <li
-            className={activeIndex === 2 ? 'active' : ''}
-            onClick={() => setActiveIndex(2)}
-          >
-            {' '}
-            <span>
-              <FaCalendarAlt />
-            </span>{' '}
-            <h6>Next 7 Days</h6>
-          </li> */}
+                        className={activeIndex === 0 ? 'active' : ''}
+                        onClick={() => setActiveIndex(0)}
+                    >
+                        <span>
+                            <FaInbox />
+                        </span>
+                        <h6>Inbox</h6>
+                    </li>
+                    <li
+                        className={activeIndex === 1 ? 'active' : ''}
+                        onClick={() => setActiveIndex(1)}
+                    >
+                        <span>
+                            <FaCalendar />
+                        </span>
+                        <h6>Today</h6>
+                    </li>
+                    <li
+                        className={activeIndex === 2 ? 'active' : ''}
+                        onClick={() => setActiveIndex(2)}
+                    >
+                        <span>
+                            <FaCalendarAlt />
+                        </span>
+                        <h6>Next 7 Days</h6>
+                    </li> */}
         </ul>
       </section>
       <section className="sidebar__middle">
         <span>
-          {' '}
-          <FaChevronDown />{' '}
+          <FaChevronDown />
         </span>
         <h6>Projects</h6>
       </section>
-      <section className="sidebar__project">
+      <section className="sidebar__projects">
         <ul className="project__lists">
-          <li>
-            {' '}
+          <li className="">
             <span>
               <FaInbox />
-            </span>{' '}
-            <h6>Project A</h6>
+            </span>
+            <h6>Project-A</h6>
           </li>
           <li>
-            {' '}
             <span>
               <FaInbox />
-            </span>{' '}
-            <h6>Project B</h6>
+            </span>
+            <h6>Project-B</h6>
           </li>
         </ul>
       </section>

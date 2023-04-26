@@ -35,7 +35,7 @@ export function TodoContent({ todos, setTodos }) {
     // #1 FindIndex
     const foundedIndex = todos.findIndex((todoObj) => todoObj.id === todoId);
     // Not founded
-    if (foundedIndex === -1) return;
+    if (foundedIndex == -1) return;
     // Founded
     const newTodos = [...todos];
     // let oldTodoObj = newTodos[foundedIndex]
