@@ -1,11 +1,11 @@
 import styles from './TodoForm.module.scss';
 import React, { useState } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 
 TodoForm.propTypes = {
   submitText: PropTypes.string.isRequired,
   onSetIsShowForm: PropTypes.func.isRequired,
-  onAddTodo: PropTypes.func,
   onEditTodo: PropTypes.func,
   todo: PropTypes.oneOfType([PropTypes.object]), // undefined , {id : number | string , task : string, status : bool, due_date:string}
 };
@@ -17,12 +17,28 @@ export function TodoForm({
   submitText,
   onSetIsShowForm,
   todo,
-  onAddTodo,
   onEditTodo,
+  setTodos,
+  setFilterList,
 }) {
   // # 1 : Logic Section
   const [task, setTask] = useState(todo?.task || '');
   const [isError, setIsError] = useState(false);
+
+  const createTodo = async (todoObj) => {
+    try {
+      let response = await axios.post('http://localhost:8080/todos', todoObj);
+
+      console.log(response.status);
+      console.log(response.data);
+      // response new Todo
+      // setFilterList, setTodo
+      setTodos((current) => [response.data.todo, ...current]);
+      setFilterList((current) => [response.data.todo, ...current]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,8 +54,14 @@ export function TodoForm({
 
     // validate passed , execute addTodo
     // onAddTodo(task) // from <TodoContent/>
-    if (todo) onEditTodo(todo.id, { task }); // send => 1.newTask 2. todoId
-    else onAddTodo(task);
+    if (todo) {
+      onEditTodo(todo.id, { task }); // send => 1.newTask 2. todoId
+    } else {
+      let now = new Date().toISOString().slice(0, 10);
+      let todoObj = { task: task, status: false, date: now };
+      createTodo(todoObj); // ยิง axios // แก้ Internal State
+    }
+
     // set back to normal mode
     onSetIsShowForm(false);
   };
