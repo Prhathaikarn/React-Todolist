@@ -55,7 +55,7 @@ export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
 
           <p className={taskStyle}>{todo.task}</p>
           <span className={styles.date__text}>
-            {getFormattedDate(todo.due_date)}
+            {getFormattedDate(todo.date)}
           </span>
 
           <div className={styles.edit__icon} onClick={handleOpenEditMode}>

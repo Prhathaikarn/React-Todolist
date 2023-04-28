@@ -1,15 +1,35 @@
 import './App.scss'; // Global
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { Header } from '../components/Header';
 import { Sidebar } from '../components/Sidebar';
 import { TodoContent } from '../components/Todo/TodoContent';
-import allTodoMock from '../data/todos.json';
+// import allTodoMock from '../data/todos.json';
 import { getSevenDayRange } from '../utils/DateUtils';
 
 function App() {
-  const [todos, setTodos] = useState(allTodoMock);
-  const [filterList, setFilterList] = useState(allTodoMock);
+  const [todos, setTodos] = useState([]);
+  const [filterList, setFilterList] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/todos',
+    })
+      .then((reponse) => {
+        console.log(reponse.status);
+        console.log(reponse);
+        console.log(reponse.data.todos);
+
+        let todoList = reponse.data.todos;
+        setTodos(todoList);
+        setFilterList(todoList)
+      })
+      .catch((err) => {
+        console.log(err.response.status);
+      });
+  }, []);
 
   // Filter Todo
   const handleFilterLists = (index) => {
@@ -18,36 +38,38 @@ function App() {
     // const nowStr = returnValue[0]
     // const nextSevenStr = returnValue[1]
 
-    let filteredTodo = [...allTodoMock];
+    let filteredTodo = [...todos];
+
+    if (index === 0) {
+      setFilterList(todos);
+    }
 
     // FILTER LOGIC : Schema for fillter "2023-04-29" == YYYY-MM-DD
-    if (index === 1)
-      filteredTodo = allTodoMock.filter(
-        (todoObj) => todoObj.due_date === nowStr
-      );
+    else if (index === 1)
+      filteredTodo = todos.filter((todoObj) => todoObj.date === nowStr);
     else if (index === 2)
-      filteredTodo = allTodoMock.filter(
-        (todoObj) =>
-          todoObj.due_date >= nowStr && todoObj.due_date <= nextSevenStr
+      filteredTodo = todos.filter(
+        (todoObj) => todoObj.date >= nowStr && todoObj.date <= nextSevenStr
       );
 
-    setTodos(filteredTodo);
+    // setTodos(filteredTodo);
     setFilterList(filteredTodo);
   };
 
   // Search Todo
   const handleSearch = (searchText) => {
-    const newTodo = filterList.filter((todoObj) =>
+    const newTodo = todos.filter((todoObj) =>
       todoObj.task.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
     );
-    setTodos(newTodo);
+    setFilterList(newTodo);
+    // setTodos(newTodo);
   };
 
   return (
     <div className="container">
       <Header onSearchText={handleSearch} />
       <Sidebar onSelectTab={handleFilterLists} />
-      <TodoContent todos={todos} setTodos={setTodos} />
+      <TodoContent todos={filterList} setTodos={setTodos} />
     </div>
   );
 }
