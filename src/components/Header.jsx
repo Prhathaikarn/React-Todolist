@@ -13,7 +13,7 @@ export function Header({ onSearchText }) {
       <span>
         <FaHome />
       </span>
-      <h3>CC-Todoist-Pavit</h3>
+      <h3>CC-Todoist P.hathaikarn</h3>
 
       {/* SearchBar */}
       <div className="header__search__container">
